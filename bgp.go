@@ -211,7 +211,7 @@ func (r *bgpPathAttributeReader) Next() (*BGPPathAttribute, error) {
 	attr.TypeCode = attrTypeBytes[1]
 
 	attrLenSize := 1
-	if attr.Flag&0x10 != 0 {
+	if attr.Flag&0x8 != 0 {
 		attrLenSize = 2
 	}
 
