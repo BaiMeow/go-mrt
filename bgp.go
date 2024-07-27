@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"time"
 )
@@ -265,7 +266,7 @@ func (r *bgpPathAttributeReader) Next() (*BGPPathAttribute, error) {
 	case 32:
 		attr.Value, err = decodeLargeCommunitiesAttr(valueBytes)
 	default:
-		return nil, fmt.Errorf("unknown BGP path attribute type code: %d", attr.TypeCode)
+		log.Printf("unknown BGP path attribute type code: %d", attr.TypeCode)
 	}
 
 	return attr, err
