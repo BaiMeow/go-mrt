@@ -232,6 +232,7 @@ func (r *bgpPathAttributeReader) Next() (*BGPPathAttribute, error) {
 	}
 
 	var err error
+	// https://www.iana.org/assignments/bgp-parameters/bgp-parameters.xhtml#bgp-parameters-2
 	switch attr.TypeCode {
 	case 1:
 		attr.Value = BGPPathAttributeOrigin(valueBytes[0])
@@ -265,6 +266,8 @@ func (r *bgpPathAttributeReader) Next() (*BGPPathAttribute, error) {
 		attr.Value, err = decodeAggregatorAttr(valueBytes, true)
 	case 32:
 		attr.Value, err = decodeLargeCommunitiesAttr(valueBytes)
+	case 35:
+		attr.Value = binary.BigEndian.Uint32(valueBytes)
 	default:
 		log.Printf("unknown BGP path attribute type code: %d", attr.TypeCode)
 	}
